@@ -68,15 +68,16 @@ export default function ListeDesProduits(){
                                     return (
                                         <tr>
                                             <th scope="row">{index + 1}</th>
-                                            <td>{produit.name.toUpperCase()}</td>
-                                            <td>{produit.brand.toUpperCase()}</td>
+                                            <td>{produit.name}</td>
+                                            <td>{produit.brand}</td>
                                             <td>{produit.serial_number}</td>
-                                            <td>{produit.type.toUpperCase()}</td>
+                                            <td>{produit.type}</td>
                                             <td>{produit.price}</td>
                                             <td>
-                                                <button type="button" className="btn btn-outline-success btn-sm">
+                                                <Link className="btn btn-outline-success btn-sm"
+                                                      href={"/produits/"+produit._id}>
                                                     Modifier
-                                                </button>
+                                                </Link>
                                                 <button type="button" className="btn btn-outline-danger btn-sm">
                                                     Delete
                                                 </button>
