@@ -1,34 +1,61 @@
 "use client"
 
 import Navbar from "@/components/Navbar";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import api from "../../../../api";
 
 export default function AddProduit(){
     const [numero, setNumero] = useState("");
     const [prix, setPrix] = useState("");
+    const [products , setProduct] = useState([]);
+
+    const [selectedProducts, setSelectedProducts] = useState([]);
+    // Gérer le changement de la case à cocher
+    const handleCheckboxChange = (product) => {
+        if (selectedProducts.includes(product)) {
+            setSelectedProducts(selectedProducts.filter(p => p !== product));
+        } else {
+            setSelectedProducts([...selectedProducts, product]);
+        }
+    };
 
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        api.get('/cold-appliances')
+            .then(response => {
+                setProduct(response.data.data);
+                // console.log(response.data.data)
+            })
+            .catch(error =>{
+                alert("Server Error");
+                console.log(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
+
     const handleAddFacture = async (e) => {
         e.preventDefault();
-        if (loading) return ;
-        setLoading(true);
-        const formData = {numero, prix};
-        try {
-            await api.post('/factures', formData);
-            alert("Ajouté avec success");
-        }
-        catch (error) {
-            if (error?.response?.status === 422)
-                setErrors(error.response.data.errors);
-            else
-                setErrors(error?.response?.data);
-        }
-        finally {
-            setLoading(false);
-        }
+        console.log(products)
+        // if (loading) return ;
+        // setLoading(true);
+        // const formData = {numero, prix};
+        // try {
+        //     await api.post('/factures', formData);
+        //     alert("Ajouté avec success");
+        // }
+        // catch (error) {
+        //     if (error?.response?.status === 422)
+        //         setErrors(error.response.data.errors);
+        //     else
+        //         setErrors(error?.response?.data);
+        // }
+        // finally {
+        //     setLoading(false);
+        // }
     }
 
     return (
@@ -81,6 +108,30 @@ export default function AddProduit(){
                                     <div id="username" className="invalid-feedback">{errors?.prix[0]}</div>
                                 }
                             </div>
+
+                            <ul>
+                                {
+                                    products.map((product, index) => {
+                                        return (
+                                            <li style={{
+                                                listStyle: "none" ,
+                                            }} key={index}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedProducts.includes(product)}
+                                                    onChange={() => handleCheckboxChange(product)}
+                                                    style={{
+                                                        margin: "15px"
+                                                    }}
+                                                />
+                                                {
+                                                    product.name
+                                                }
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
 
                         </form>
                     </div>

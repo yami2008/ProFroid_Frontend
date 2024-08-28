@@ -17,9 +17,9 @@ export default function Home() {
 
     // Méthode pour se logguer
     const handleLogin = async (e) => {
-        e.preventDefault();
-        if (loading || errors) return;
-        setLoading(true);
+        //e.preventDefault();
+        //if (loading || errors) return;
+        // setLoading(true);
         const formData = {username, password};
         try {
             const {data} = await api.post('/login', formData);

@@ -17,7 +17,7 @@ export default function Navbar(){
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" href="#">
+                            <Link className="nav-link" aria-current="page" href="/users/index">
                                 Gestion des profils
                             </Link>
                         </li>
