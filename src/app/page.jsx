@@ -28,6 +28,7 @@ export default function Home() {
             await router.push('/dashboard');
         }
         catch (error) {
+            alert("Connexion réussie")
             if (error.response.status === 422){
                 setErrors(error.response.data.errors);
             }
