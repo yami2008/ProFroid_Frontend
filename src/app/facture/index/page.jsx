@@ -37,7 +37,7 @@ export default function ListeDesProduits(){
                         <h1 style={{color: "white"}} className="mt-4">
                             Liste des factures
                         </h1>
-                        <Link href="/produits/create" className="btn btn-primary btn-sm mb-4" tag="button">
+                        <Link href="/facture/create" className="btn btn-primary btn-sm mb-4" tag="button">
                             + Ajouter une facture
                         </Link>
                     </div>
@@ -50,6 +50,7 @@ export default function ListeDesProduits(){
                                 <th scope="col">#</th>
                                 <th scope="col">Numéro</th>
                                 <th scope="col">Prix Total</th>
+                                <th scope="col">-</th>
                             </tr>
                             </thead>
                             <tbody className="table-group-divider">
@@ -65,7 +66,7 @@ export default function ListeDesProduits(){
                                         <tr>
                                             <th scope="row">{index + 1}</th>
                                             <td>{facture.numero}</td>
-                                            <td>{facture.prix_total}</td>
+                                            <td>{facture.prix}</td>
                                             <td>
                                                 <Link className="btn btn-outline-success btn-sm"
                                                       href={"/factures/"+facture._id}>

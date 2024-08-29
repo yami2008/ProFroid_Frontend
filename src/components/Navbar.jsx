@@ -17,13 +17,18 @@ export default function Navbar(){
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" href="#">
+                            <Link className="nav-link" aria-current="page" href="/users/index">
                                 Gestion des profils
                             </Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" aria-current="page" href="/produits/index">
                                 Gestion des produits
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" href="/facture/index">
+                                Gestion des factures
                             </Link>
                         </li>
                     </ul>

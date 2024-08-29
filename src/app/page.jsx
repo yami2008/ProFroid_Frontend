@@ -17,9 +17,6 @@ export default function Home() {
 
     // Méthode pour se logguer
     const handleLogin = async (e) => {
-        e.preventDefault();
-        if (loading || errors) return;
-        setLoading(true);
         const formData = {username, password};
         try {
             const {data} = await api.post('/login', formData);
@@ -36,20 +33,17 @@ export default function Home() {
                 setErrors(error.response.data);
             }
         }
-        finally {
-            setLoading(false);
-        }
     };
 
     return (
         <div className="container">
           <div className="row justify-content-center align-items-center">
               <div className="col-12 col-md-4" style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform : "translate(-50%, -50%)"
-          }}>
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform : "translate(-50%, -50%)"
+              }}>
                   <div className="card" style={{backgroundColor : "rgba(255,255,255,0.7)",}}>
 
                       {/* Titre */}
