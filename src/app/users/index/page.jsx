@@ -24,6 +24,22 @@ export default function ListeDesProfils(){
             });
     }, []);
 
+    const deleteUser = (idUser) => {
+        if (confirm("Etes vous sure de vouloir supprimer cet utilisateur ?")){
+            api.delete('/users/' + idUser)
+                .then(response => {
+                    alert("Utilisateur supprimé avec succès !");
+                    let tmp = users.filter(user => user._id !== idUser)
+                    console.log(tmp);
+                    setUsers(tmp);
+                })
+                .catch(error => {
+                    alert("Erreur lors de la suppression de l'utilisateur.");
+                    console.log(error.message);
+                });
+        }
+    }
+
     return (
         <>
             <Navbar/>
@@ -64,14 +80,15 @@ export default function ListeDesProfils(){
                                             <td>{user?.first_name === undefined && '/' + ' ' + user?.last_name === undefined && '/'}</td>
                                             <td>{user?.username}</td>
                                             <td>{user?.password}</td>
-                                            <td>{user?.phone_number === undefined && '/'}</td>
-                                            <td>{user?.adresse === undefined && '/'}</td>
+                                            <td>{user?.phone_number === undefined ? '/' : user?.phone_number}</td>
+                                            <td>{user?.address === undefined ? '/' : user?.address}</td>
                                             <td>
                                                 <Link className="btn btn-outline-success btn-sm"
                                                       href={"/users/"+user._id}>
                                                     Modifier
                                                 </Link>
-                                                <button type="button" className="btn btn-outline-danger btn-sm">
+                                                <button type="button" className="btn btn-outline-danger btn-sm"
+                                                        onClick={ () => deleteUser(user._id)}>
                                                     Delete
                                                 </button>
                                             </td>
