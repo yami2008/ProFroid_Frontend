@@ -14,18 +14,38 @@ export default function ListeDesProduits(){
         api.get('/factures')
             .then(response => {
                 setFactures(response.data.data);
-                // console.log(response.data.data)
             })
             .catch(error =>{
                 alert("Server Error");
                 console.log(error.message);
-            })
-            .finally(() => {
-                setLoading(false);
             });
     }, []);
 
+    const deleteFacture = (idFacture) => {
+        if (confirm("Etes vous sure de vouloir supprimer cette facture ?")){
+            api.delete('/factures/' + idFacture)
+                .then(response => {
+                    alert("Facture supprimée avec succès !");
+                    let tmp = factures.filter(facture => facture._id !== idFacture)
+                    console.log(tmp);
+                    setFactures(tmp);
+                })
+                .catch(error => {
+                    alert("Erreur lors de la suppression de la facture.");
+                    console.log(error.message);
+                });
+        }
+    }
 
+    // Fonction pour calculer le prix total d'une facture
+    const calculerPrixTotal = (produits) => {
+        let prixTotal = 0;
+        console.log(produits)
+        // produits.forEach(produit => {
+        //     prixTotal += produit.prix * produit.quantite;
+        // });
+        return prixTotal;
+    };
 
 
     return (
@@ -66,15 +86,10 @@ export default function ListeDesProduits(){
                                         <tr>
                                             <th scope="row">{index + 1}</th>
                                             <td>{facture.numero}</td>
-                                            <td>{facture.prix}</td>
+                                            <td>{facture.numero}</td>
                                             <td>
-                                                <Link className="btn btn-outline-success btn-sm"
-                                                      href={"/factures/"+facture._id}>
-                                                    Modifier
-                                                </Link>
-                                                <button type="button" className="btn btn-outline-danger btn-sm">
-                                                    Delete
-                                                </button>
+                                                <Link className="btn btn-outline-success btn-sm" href={"/factures/"+facture._id}>Modifier</Link>
+                                                <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => deleteFacture(facture._id)}>Delete</button>
                                             </td>
                                         </tr>
                                     );
