@@ -26,6 +26,23 @@ export default function ListeDesProduits(){
     }, []);
 
 
+    const deleteProduit = (idProduit) => {
+        if (confirm("Etes vous sure de vouloir supprimer ce produit ?")){
+            api.delete('/cold-appliances/' + idProduit)
+                .then(response => {
+                    alert("Produit supprimé avec succès !");
+                    let tmp = produits.filter(produit => produit._id !== idProduit)
+                    console.log(tmp);
+                    setProduits(tmp);
+                })
+                .catch(error => {
+                    alert("Erreur lors de la suppression du produit.");
+                    console.log(error.message);
+                });
+        }
+    }
+
+
 
 
     return (
@@ -44,7 +61,7 @@ export default function ListeDesProduits(){
 
                     <div className="col-12 col-md-12 text-center">
                         <table className="table">
-                            <caption style={{color: "grey"}}>List of cold appliances</caption>
+                            <caption style={{color: "grey"}}>List of products</caption>
                             <thead className="table-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -78,7 +95,7 @@ export default function ListeDesProduits(){
                                                       href={"/produits/"+produit._id}>
                                                     Modifier
                                                 </Link>
-                                                <button type="button" className="btn btn-outline-danger btn-sm">
+                                                <button type="button" className="btn btn-outline-danger btn-sm" onClick={ () => deleteProduit(produit._id)}>
                                                     Delete
                                                 </button>
                                             </td>

@@ -7,7 +7,6 @@ import {useRouter} from "next/navigation";
 
 export default function DetailProfil({ params }){
 
-
     const router = useRouter();
 
     const [username, setUsername] = useState("");
@@ -36,7 +35,6 @@ export default function DetailProfil({ params }){
             })
             .finally(() => {});
     }, []);
-
 
     const handleUpdateProfil = (e) => {
         e.preventDefault();

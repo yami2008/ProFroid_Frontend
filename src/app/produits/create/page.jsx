@@ -3,8 +3,12 @@
 import Navbar from "@/components/Navbar";
 import {useState} from "react";
 import api from "../../../../api";
+import {useRouter} from "next/navigation";
+
 
 export default function AddProduit(){
+    const router = useRouter();
+
     const [name, setName] = useState("");
     const [brand, setBrand] = useState("");
     const [serial_number, setSerialNumber] = useState("");
@@ -22,6 +26,7 @@ export default function AddProduit(){
         try {
             await api.post('/cold-appliances', formData);
             alert("Ajouté avec success");
+            router.push('/produits/index');
         }
         catch (error) {
             if (error?.response?.status === 422)
@@ -41,10 +46,10 @@ export default function AddProduit(){
                 <div className="card">
                     <h5 className="card-header">Créer un produit</h5>
                     <div className="card-body">
-                        <form className="row justify-content-center align-content-center gap-3">
+                        <form className="row justify-content-center align-content-center">
 
                             {/* Name */}
-                            <div className="col-12 col-md-6">
+                            <div className="col-12 col-md-6 mb-4">
                                 <label htmlFor="name" className="form-label">
                                     Nom de produit
                                 </label>
@@ -64,7 +69,7 @@ export default function AddProduit(){
                             </div>
 
                             {/* Brand */}
-                            <div className="col-12 col-md-6">
+                            <div className="col-12 col-md-6 mb-4">
                                 <label htmlFor="brand" className="form-label">
                                     Brand
                                 </label>
@@ -84,7 +89,7 @@ export default function AddProduit(){
                             </div>
 
                             {/* Serial Number */}
-                            <div className="col-12 col-md-4">
+                            <div className="col-12 col-md-4 mb-4">
                                 <label htmlFor="serialNumber" className="form-label">
                                     Numéro de produit
                                 </label>
@@ -104,7 +109,7 @@ export default function AddProduit(){
                             </div>
 
                             {/* Type */}
-                            <div className="col-12 col-md-4">
+                            <div className="col-12 col-md-4 mb-4">
                                 <label htmlFor="type" className="form-label">
                                     Type de produit
                                 </label>
@@ -124,7 +129,7 @@ export default function AddProduit(){
                             </div>
 
                             {/* Prix */}
-                            <div className="col-12 col-md-4">
+                            <div className="col-12 col-md-4 mb-4">
                                 <label htmlFor="price" className="form-label">
                                     Prix de produit
                                 </label>

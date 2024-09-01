@@ -3,39 +3,51 @@
 import {useEffect, useState} from "react";
 import api from "../../../../api";
 import Navbar from "@/components/Navbar";
+import {useRouter} from "next/navigation";
 
 export default function DetailProduit({ params }){
 
-    const [produit, setProduit] = useState({});
+    const router = useRouter();
+
+    const [name, setName] = useState("");
+    const [brand, setBrand] = useState("");
+    const [serial_number, setSerialNumber] = useState("");
+    const [type, setType] = useState("");
+    const [price, setPrice] = useState("");
 
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const changeProduit = (e) => setProduit({
-        ...produit,
-        [e.target.name] : e.target.value,
-    });
-
     useEffect(() => {
         api.get('/cold-appliances/'+params.id)
-            .then(response => {
-                setProduit(response.data.data);
-                console.log(response.data.data);
-                // setName(response.data.data.name);
+            .then( response => {
+                setName(response.data.data.name);
+                setBrand(response.data.data.brand);
+                setSerialNumber(response.data.data.serial_number);
+                setType(response.data.data.type);
+                setPrice(response.data.data.price);
             })
             .catch(error => {
-                alert("Error")
-                console.log(error.message)
+                alert("Error");
+                console.log(error.message);
             })
-            .finally(() => {
-
-            });
+            .finally(() => {});
     }, []);
 
-    const handleUpdateProduct = () => {
-        alert("EEEEE");
-    }
+    const handleUpdateProduct = (e) => {
+        e.preventDefault();
+        const updatedData = {name, brand, serial_number, type, price};
 
+        // Envoyer la requête PUT/PATCH pour mettre à jour le profil
+        api.put('/cold-appliances/' + params.id, updatedData)
+            .then(response => {
+                alert("Le produit a été mis à jour avec succès !");
+            })
+            .catch(error => {
+                alert("Erreur lors de la mise à jour du profil.");
+                console.log(error.message);
+            });
+    }
 
     return (
         <>
@@ -44,10 +56,10 @@ export default function DetailProduit({ params }){
                 <div className="card">
                     <h5 className="card-header">Modifier un produit</h5>
                     <div className="card-body">
-                        <form className="row justify-content-center align-content-center gap-3">
+                        <form className="row justify-content-center align-content-center">
 
                             {/* Name */}
-                            <div className="col-12 col-md-6">
+                            <div className="col-12 col-md-6 mb-4">
                                 <label htmlFor="name" className="form-label">
                                     Nom de produit
                                 </label>
@@ -57,9 +69,8 @@ export default function DetailProduit({ params }){
                                     placeholder="Nom du produit"
                                     className={`form-control ${errors?.name ? 'is-invalid' : ''} ${loading ? 'disabled' : ''}`}
                                     disabled={loading}
-                                    name="name"
-                                    value={produit.name}
-                                    onChange={changeProduit}
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
                                 />
                                 {
                                     errors?.name &&
@@ -68,7 +79,7 @@ export default function DetailProduit({ params }){
                             </div>
 
                             {/* Brand */}
-                            <div className="col-12 col-md-6">
+                            <div className="col-12 col-md-6 mb-4">
                                 <label htmlFor="brand" className="form-label">
                                     Brand
                                 </label>
@@ -78,9 +89,8 @@ export default function DetailProduit({ params }){
                                     placeholder="Brand du produit"
                                     className={`form-control ${errors?.brand ? 'is-invalid' : ''} ${loading ? 'disabled' : ''}`}
                                     disabled={loading}
-                                    name="brand"
-                                    value={produit.brand}
-                                    onChange={changeProduit}
+                                    value={brand}
+                                    onChange={(e) => setBrand(e.target.value)}
                                 />
                                 {
                                     errors?.brand &&
@@ -89,7 +99,7 @@ export default function DetailProduit({ params }){
                             </div>
 
                             {/* Serial Number */}
-                            <div className="col-12 col-md-4">
+                            <div className="col-12 col-md-4 mb-4">
                                 <label htmlFor="serialNumber" className="form-label">
                                     Numéro de produit
                                 </label>
@@ -99,9 +109,8 @@ export default function DetailProduit({ params }){
                                     placeholder="N° du produit"
                                     className={`form-control ${errors?.serial_number ? 'is-invalid' : ''} ${loading ? 'disabled' : ''}`}
                                     disabled={loading}
-                                    name="serial_number"
-                                    value={produit.serial_number}
-                                    onChange={changeProduit}
+                                    value={serial_number}
+                                    onChange={(e) => setSerialNumber(e.target.value)}
                                 />
                                 {
                                     errors?.serial_number &&
@@ -110,7 +119,7 @@ export default function DetailProduit({ params }){
                             </div>
 
                             {/* Type */}
-                            <div className="col-12 col-md-4">
+                            <div className="col-12 col-md-4 mb-4">
                                 <label htmlFor="type" className="form-label">
                                     Type de produit
                                 </label>
@@ -120,9 +129,8 @@ export default function DetailProduit({ params }){
                                     placeholder="Type du produit"
                                     className={`form-control ${errors?.type ? 'is-invalid' : ''} ${loading ? 'disabled' : ''}`}
                                     disabled={loading}
-                                    name="type"
-                                    value={produit.type}
-                                    onChange={changeProduit}
+                                    value={type}
+                                    onChange={(e) => setType(e.target.value)}
                                 />
                                 {
                                     errors?.type &&
@@ -131,7 +139,7 @@ export default function DetailProduit({ params }){
                             </div>
 
                             {/* Prix */}
-                            <div className="col-12 col-md-4">
+                            <div className="col-12 col-md-4 mb-4">
                                 <label htmlFor="price" className="form-label">
                                     Prix de produit
                                 </label>
@@ -141,9 +149,8 @@ export default function DetailProduit({ params }){
                                     placeholder="Prix du produit"
                                     className={`form-control ${errors?.price ? 'is-invalid' : ''} ${loading ? 'disabled' : ''}`}
                                     disabled={loading}
-                                    name="price"
-                                    value={produit.price}
-                                    onChange={changeProduit}
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
                                 />
                                 {
                                     errors?.price &&
@@ -162,6 +169,5 @@ export default function DetailProduit({ params }){
             </div>
         </>
     )
-
 
 }
