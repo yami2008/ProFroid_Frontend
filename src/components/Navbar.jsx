@@ -1,6 +1,20 @@
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export default function Navbar(){
+
+    const router = useRouter();
+
+    const logout = () => {
+        localStorage.clear('token');
+        router.push('/');
+    };
+
+
+
+
+
+
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
@@ -30,6 +44,11 @@ export default function Navbar(){
                             <Link className="nav-link" aria-current="page" href="/facture/index">
                                 Gestion des factures
                             </Link>
+                        </li>
+                        <li className="nav-item">
+                            <button className="nav-link" aria-current="page" onClick={logout}>
+                                Deconnexion
+                            </button>
                         </li>
                     </ul>
                 </div>

@@ -61,7 +61,8 @@ export default function DetailProduit({ params }){
 
     const handleUpdateFacture = (e) => {
         e.preventDefault();
-        api.post('/factures/' + params.id, facture)
+        const data = {numero}
+        api.put('/factures/' + params.id, data)
             .then(response => {
                 alert("La facture a été mise à jour avec succès !");
             })
@@ -191,7 +192,7 @@ export default function DetailProduit({ params }){
                                                 {
                                                     produits.map((produit) => (
                                                         <option key={produit._id} value={produit._id}>
-                                                            {produit.name} - {produit.price} €
+                                                            {produit.name} - {produit.price} DZD
                                                         </option>
                                                     ))
                                                 }
@@ -215,7 +216,7 @@ export default function DetailProduit({ params }){
                     </div>
                     <div className="card-footer">
                         <button className="btn btn-success btn-sm" onClick={handleUpdateFacture}>
-                            Modifier le produit
+                            Modifier la facture
                         </button>
                     </div>
                 </div>
