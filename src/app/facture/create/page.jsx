@@ -9,7 +9,7 @@ export default function AddProduit(){
 
     const router = useRouter();
 
-    const [produits, setProduits] = useState([]); // Liste des produits disponibles
+    const [produits, setProduits] = useState([]);
     const [facture, setFacture] = useState({
         numero: '',
         produits: [] // Liste des produits avec quantité
@@ -18,9 +18,7 @@ export default function AddProduit(){
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-
     useEffect(() => {
-        // Charger la liste des produits depuis le backend
         api.get('/cold-appliances')
             .then(response => {
                 setProduits(response.data.data);
@@ -45,6 +43,7 @@ export default function AddProduit(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(facture)
         api.post('/factures', facture)
             .then(response => {
                 alert('Facture ajoutée avec succès !');
@@ -55,12 +54,6 @@ export default function AddProduit(){
                 console.error(error);
             });
     };
-
-
-
-
-
-
 
     return (
         <>
@@ -136,8 +129,6 @@ export default function AddProduit(){
 
                 </div>
             </div>
-
-
         </>
     )
 }

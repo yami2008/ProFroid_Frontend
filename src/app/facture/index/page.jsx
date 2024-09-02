@@ -86,10 +86,14 @@ export default function ListeDesProduits(){
                                         <tr>
                                             <th scope="row">{index + 1}</th>
                                             <td>{facture.numero}</td>
-                                            <td>{facture.numero}</td>
+                                            <td>{facture.prix} DZD</td>
                                             <td>
-                                                <Link className="btn btn-outline-success btn-sm" href={"/factures/"+facture._id}>Modifier</Link>
-                                                <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => deleteFacture(facture._id)}>Delete</button>
+                                                <Link className="btn btn-outline-success btn-sm" href={"/facture/"+facture._id}>
+                                                    Modifier
+                                                </Link>
+                                                <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => deleteFacture(facture._id)}>
+                                                    Delete
+                                                </button>
                                             </td>
                                         </tr>
                                     );
